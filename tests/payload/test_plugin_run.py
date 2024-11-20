@@ -13,7 +13,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.ie.webdriver import WebDriver
 
 from tests.config.fixtures import fix_plugin_config, project_config
-# from tests.payload.fixtures import execute_timeout
+from tests.payload.fixtures import execute_timeout
 from s3p_sdk.types import S3PRefer, S3PDocument, S3PPlugin
 from s3p_sdk.plugin.types import SOURCE
 
@@ -25,7 +25,7 @@ class TestPayloadRun:
     def chrome_driver(self) -> WebDriver:
         options = webdriver.Options()
 
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('window-size=1920x1080')
@@ -67,7 +67,7 @@ class TestPayloadRun:
         if isinstance(payload, type(AMERICANEXPRESS)):
             _payload = payload(refer=refer, plugin=_plugin, web_driver=driver, max_count_documents=max_document, last_document=None)
 
-            # @execute_timeout(timeout)
+            @execute_timeout(timeout)
             def execute() -> tuple[S3PDocument, ...]:
                 return _payload.content()
 
